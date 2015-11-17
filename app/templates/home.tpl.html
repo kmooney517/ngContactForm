@@ -1,0 +1,16 @@
+<h2>{{vm.title}}</h2>
+
+<form ng-submit="vm.newNote(noteObj)">
+  <small>{{ vm.errMsg1 }}</small>
+  <input placeholder="Name" ng-model="noteObj.name">
+  <small>{{ vm.errMsg2 }}</small>
+  <input type="email" placeholder="Email" ng-model="noteObj.email">
+
+  <small>{{ vm.errMsg3 }}</small>
+  <input placeholder="Website" ng-model="noteObj.website">
+
+  <small>{{ vm.errMsg4 }}</small>
+  <textarea  placeholder="Message" ng-model="noteObj.message"></textarea>
+
+  <button>Submit Question</button>
+</form>
