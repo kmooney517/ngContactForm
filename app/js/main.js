@@ -14,6 +14,10 @@ var config = function config($stateProvider, $urlRouterProvider) {
     url: '/',
     controller: 'HomeController as vm',
     templateUrl: 'templates/home.tpl.html'
+  }).state('root.submissions', {
+    url: '/submissions',
+    controller: 'SubmissionController as vm',
+    templateUrl: 'templates/submissions.tpl.html'
   });
 };
 
@@ -56,7 +60,9 @@ var HomeController = function HomeController($scope, PARSE, HomeService) {
   vm.newNote = newNote;
 
   function newNote(noteObj) {
-    HomeService.newNote(noteObj).then(function (response) {});
+    HomeService.newNote(noteObj).then(function (response) {
+      $scope.noteObj = {};
+    });
   }
 
   var validateName = function validateName(newVal) {
@@ -130,6 +136,31 @@ module.exports = exports['default'];
 },{}],4:[function(require,module,exports){
 'use strict';
 
+Object.defineProperty(exports, '__esModule', {
+  value: true
+});
+var SubmissionController = function SubmissionController($scope, PARSE, SubmissionService) {
+
+  var vm = this;
+  vm.title = 'Submissions';
+
+  vm.note = getNote();
+
+  function getNote() {
+    SubmissionService.getSubmissions().then(function (response) {
+      vm.note = response.data.results;
+    });
+  }
+};
+
+SubmissionController.$inject = ['$scope', 'PARSE', 'SubmissionService'];
+
+exports['default'] = SubmissionController;
+module.exports = exports['default'];
+
+},{}],5:[function(require,module,exports){
+'use strict';
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 
 var _angular = require('angular');
@@ -150,13 +181,21 @@ var _controllersHomeController = require('./controllers/homeController');
 
 var _controllersHomeController2 = _interopRequireDefault(_controllersHomeController);
 
+var _controllersSubmissionController = require('./controllers/submissionController');
+
+var _controllersSubmissionController2 = _interopRequireDefault(_controllersSubmissionController);
+
 var _servicesHomeService = require('./services/homeService');
 
 var _servicesHomeService2 = _interopRequireDefault(_servicesHomeService);
 
-_angular2['default'].module('app', ['ui.router']).config(_config2['default']).constant('PARSE', _constantsParseConstant2['default']).controller('HomeController', _controllersHomeController2['default']).service('HomeService', _servicesHomeService2['default']);
+var _servicesSubmissionService = require('./services/submissionService');
 
-},{"./config":1,"./constants/parse.constant":2,"./controllers/homeController":3,"./services/homeService":5,"angular":8,"angular-ui-router":6}],5:[function(require,module,exports){
+var _servicesSubmissionService2 = _interopRequireDefault(_servicesSubmissionService);
+
+_angular2['default'].module('app', ['ui.router']).config(_config2['default']).constant('PARSE', _constantsParseConstant2['default']).controller('HomeController', _controllersHomeController2['default']).controller('SubmissionController', _controllersSubmissionController2['default']).service('HomeService', _servicesHomeService2['default']).service('SubmissionService', _servicesSubmissionService2['default']);
+
+},{"./config":1,"./constants/parse.constant":2,"./controllers/homeController":3,"./controllers/submissionController":4,"./services/homeService":6,"./services/submissionService":7,"angular":10,"angular-ui-router":8}],6:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, '__esModule', {
@@ -186,7 +225,29 @@ HomeService.$inject = ['$http', 'PARSE'];
 exports['default'] = HomeService;
 module.exports = exports['default'];
 
-},{}],6:[function(require,module,exports){
+},{}],7:[function(require,module,exports){
+'use strict';
+
+Object.defineProperty(exports, '__esModule', {
+  value: true
+});
+var SubmissionService = function SubmissionService($http, PARSE) {
+
+  var url = PARSE.URL + 'classes/note';
+
+  this.getSubmissions = getSubmissions;
+
+  function getSubmissions() {
+    return $http.get(url, PARSE.CONFIG);
+  }
+};
+
+SubmissionService.$inject = ['$http', 'PARSE'];
+
+exports['default'] = SubmissionService;
+module.exports = exports['default'];
+
+},{}],8:[function(require,module,exports){
 /**
  * State-based routing for AngularJS
  * @version v0.2.15
@@ -4557,7 +4618,7 @@ angular.module('ui.router.state')
   .filter('isState', $IsStateFilter)
   .filter('includedByState', $IncludedByStateFilter);
 })(window, window.angular);
-},{}],7:[function(require,module,exports){
+},{}],9:[function(require,module,exports){
 /**
  * @license AngularJS v1.4.7
  * (c) 2010-2015 Google, Inc. http://angularjs.org
@@ -33462,11 +33523,11 @@ $provide.value("$locale", {
 })(window, document);
 
 !window.angular.$$csp().noInlineStyle && window.angular.element(document.head).prepend('<style type="text/css">@charset "UTF-8";[ng\\:cloak],[ng-cloak],[data-ng-cloak],[x-ng-cloak],.ng-cloak,.x-ng-cloak,.ng-hide:not(.ng-hide-animate){display:none !important;}ng\\:form{display:block;}.ng-animate-shim{visibility:hidden;}.ng-anchor{position:absolute;}</style>');
-},{}],8:[function(require,module,exports){
+},{}],10:[function(require,module,exports){
 require('./angular');
 module.exports = angular;
 
-},{"./angular":7}]},{},[4])
+},{"./angular":9}]},{},[5])
 
 
 //# sourceMappingURL=main.js.map

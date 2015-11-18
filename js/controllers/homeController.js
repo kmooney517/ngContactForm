@@ -4,12 +4,11 @@ let HomeController = function ($scope, PARSE, HomeService) {
 
   vm.title = 'Contact Us';
 
-
-
   vm.newNote = newNote;
 
   function newNote (noteObj) {
     HomeService.newNote(noteObj).then( (response) => {
+      $scope.noteObj = {};
     });
   }
 
