@@ -1,6 +1,17 @@
 ## Welcome to My Project
 
-> I am your Readme.md file, you should probably update me.
+> Link: http://loose-transport.surge.sh/#/
+
+> Project Objective: create a contact form with the following fields: name, email, website and message. The form has a submit button. As the user is typing, it validates all of the form fields and show any and all errors in the form data.
+Once you have a correctly filled out form, the info is sent to Parse.
+
+The following validations were met:
+Name cannot be left empty
+Email cannot be left empty
+Email must contain an @
+Website cannot be left empty
+Website must start with http:// or https:// - help
+Message cannot be left empty
 
 
 ## Usage
